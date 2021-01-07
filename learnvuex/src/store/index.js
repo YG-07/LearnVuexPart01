@@ -18,8 +18,9 @@ const store = new Vuex.Store({
   },
   actions: {
 
-  },getters: {
-
+  },
+  getters: {
+    
   },
   modules: {
 
