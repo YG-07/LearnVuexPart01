@@ -46,7 +46,7 @@ bilibili URL：https://space.bilibili.com/36139192
 #### 2.3 按照Chrome的Devtools插件
 * 下载地址(外网)：https://chrome.google.com/webstore  
 * 安装了扩展之后重新打开Chrome浏览器，F12里多了一项`Vue`视图
-#### 2.4 修改操作
+#### 2.4 Vuex的mutations修改操作
 * 先在index.js里store对象的mutations属性里定义方法
 ```javaScript
 mutations: {
@@ -76,3 +76,41 @@ add() {
 * 如果你的状态信息是保存到多个Store对象中的，那么之后的管理和维护等等都会变得特别困难。
 * 所以Vuex也使用了单一状态树来管理**应用层级的全部状态**。
 * 单一状态树能够让我们`最直接的方式`找到某个状态的片段，而且在之后的维护和调试过程中，也可以非常**方便的管理和维护**
+
+### 四、Vuex的更多操作 (134)
+#### 4.1 Vuex的getters获取计算后的数据
+* 先在getters里定义获取的数据的方法
+```javaScript
+getters: {
+  powerCounter(state) {
+    return state.counter * state.counter
+  }
+}
+```
+* 在再组件里调用，也可以写成计算属性
+```html
+<p>$store.getters.powerCounter</p>
+```
+#### 4.2 案例：获取Vuex管理的学生数组里的数据
+state里有一个学生信息数组，包括学生姓名、分数等  
+需求：1.通过getters获取分数>=60的学生信息，2.通过getters获取分数>=60的学生个数，3.通过getters传一个名字获取学生信息
+* index.js的代码,1使用.filter()过滤器，2getters的函数传递getters参数(最多2个参数)，3返回一个带参数的函数，即可解决只能传2个参数的问题了
+```javaScript
+passStudents(state){
+  return state.students.filter(s => s.score >=60)
+},
+passStudentsLength(state, getters){
+  return getters.passStudents.length
+},
+nametoStu(state) {
+  return stuName => {
+    return state.students.filter(s => s.name == stuName)
+  } 
+}
+```
+* App.vue组件的代码，通过$store.getters调用对应函数即可，其他组件同理
+```html
+<p>{{$store.getters.passStudents}}</p>
+<p>{{$store.getters.passStudentsLength}}</p>
+<p>{{$store.getters.nametoStu('Tom')}}</p>
+```
