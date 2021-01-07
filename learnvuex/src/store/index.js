@@ -9,10 +9,10 @@ const store = new Vuex.Store({
     counter: 30,
     students: [
       {id: 1001, name: 'Tom', score: 73},
-      {id: 1001, name: 'John', score: 49},
-      {id: 1001, name: 'Edu', score: 60},
-      {id: 1001, name: 'Peter', score: 92},
-      {id: 1001, name: 'Jim', score: 58},
+      {id: 1002, name: 'John', score: 49},
+      {id: 1003, name: 'Edu', score: 60},
+      {id: 1004, name: 'Peter', score: 92},
+      {id: 1005, name: 'Jim', score: 58},
     ]
   },
   mutations: {
@@ -21,6 +21,13 @@ const store = new Vuex.Store({
     },
     decrement(state) {
       state.counter--
+    },
+    incrementCount(state, count) {
+      state.counter += count
+    },
+    //mutation的参数称为载荷(Payload)
+    addStudent(state, student){
+      state.students.push(student)
     }
   },
   actions: {

@@ -114,3 +114,30 @@ nametoStu(state) {
 <p>{{$store.getters.passStudentsLength}}</p>
 <p>{{$store.getters.nametoStu('Tom')}}</p>
 ```
+### 五、mutations携带参数
+#### 5.1 mutation的参数
+* 在通过mutation更新数据的时候，有可能我们希望携带一些**额外的参数**，这些参数被称为是mutation的**载荷（Payload）**  
+* mutation更新数据也会引起getters的更新，都是响应式的
+#### 5.2 mutation传参案例
+(分别是mutation定义、App调用代码)  
+1. **传递变量**
+```javaScript
+incrementCount(state, count) {
+  state.counter += count
+}
+
+addCount(count) {
+      this.$store.commit('incrementCount', count)
+    }
+```
+2. **传递对象**
+```javaScript
+addStudent(state, student){
+  state.students.push(student)
+}
+
+const aStu = {id: 1008, name: 'Mary', score: 91}
+addStu(aStu) {
+  this.$store.commit('addStudent', aStu)
+}
+```
