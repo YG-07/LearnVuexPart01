@@ -73,7 +73,11 @@ export default {
       this.$store.commit('decrement')
     },
     addCount(count) {
-      this.$store.commit('incrementCount', count)
+      // this.$store.commit('incrementCount', count)
+      this.$store.commit({
+        type:'incrementCount',
+        count
+      })
     },
     addStu() {
       //不是最优的方法，构建对象

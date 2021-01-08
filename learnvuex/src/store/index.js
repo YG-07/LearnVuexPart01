@@ -22,8 +22,11 @@ const store = new Vuex.Store({
     decrement(state) {
       state.counter--
     },
-    incrementCount(state, count) {
-      state.counter += count
+    // incrementCount(state, count) {
+    //   state.counter += count
+    // },
+    incrementCount(state, payload) {
+      state.counter += payload.count
     },
     //mutation的参数称为载荷(Payload)
     addStudent(state, student){

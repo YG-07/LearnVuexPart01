@@ -114,7 +114,7 @@ nametoStu(state) {
 <p>{{$store.getters.passStudentsLength}}</p>
 <p>{{$store.getters.nametoStu('Tom')}}</p>
 ```
-### 五、mutations携带参数
+### 五、mutations携带参数 (135)
 #### 5.1 mutation的参数
 * 在通过mutation更新数据的时候，有可能我们希望携带一些**额外的参数**，这些参数被称为是mutation的**载荷（Payload）**  
 * mutation更新数据也会引起getters的更新，都是响应式的
@@ -141,3 +141,18 @@ addStu(aStu) {
   this.$store.commit('addStudent', aStu)
 }
 ```
+#### 5.3 mutation的提交风格
+Vue还提供了另外一种风格，它是一个包含type属性的对象  
+```javaScript
+this.$store.commit({
+  type:'incrementCount',
+  count
+})
+```
+mutation中处理方法就是将commit的对象作为payload使用
+```javaScript
+incrementCount(state, payload) {
+  state.counter += payload.count
+}
+```
+
