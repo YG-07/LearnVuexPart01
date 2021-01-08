@@ -34,7 +34,7 @@ bilibili URL：https://space.bilibili.com/36139192
 ### 二、安装和使用Vuex (131-132)
 #### 2.1 安装Vuex并使用
 1. 安装指令：`npm install vuex --save`  
-2. 创建store文件夹，里面创建index.js，类似路由的创建、注册和导出，
+2. 在**src文件夹**里创建**store文件夹**（用来封装Vuex的结构），里面创建**index.js**，类似路由的创建、注册和导出，
   但注意是创建的Vuex.Store()对象，`const store = new Vuex.Store({...})`
 3. store对象的option有`state(状态)、mutations、actions、getters、modules`等
 4. 调用时，使用$store变量：`{{$store.state.counter}}`  
@@ -65,7 +65,7 @@ add() {
 ```
 ### 三、State单一状态树 (133)
 #### 3.1 Vuex的单一状态树
-* 英文名称是`Single Source of Truth`，也可以翻译成**单一数据源**。
+* 英文名称是`Single Source of Truth`，也可以翻译成**单一数据源**
 #### 3.2 生活中的例子
 * 我们知道，在国内我们有很多的信息需要被记录，比如上学时的个人档案，工作后的社保记录，公积金记录，结婚后的婚姻信息，以及其他相关的户口、医疗、文凭、房产记录等等（还有很多信息）。
 * 这些信息被分散在很多地方进行管理，有一天你需要办某个业务时（比如入户某个城市市，你会发现你需要到各个对应的工作地点去打
@@ -73,7 +73,7 @@ add() {
 * 这种保存信息的方案，不仅仅低效，而且不方便管理，以及日后的维护也是一个庞大的工作（需要大量的各个部门的人力来维护，当
 然国家目前已经在完善我们的这个系统了）。
 #### 3.3 应用开发类似
-* 如果你的状态信息是保存到多个Store对象中的，那么之后的管理和维护等等都会变得特别困难。
+* 如果你的状态信息是保存到**多个Store对象**中的，那么之后的管理和维护等等都会变得特别困难。
 * 所以Vuex也使用了单一状态树来管理**应用层级的全部状态**。
 * 单一状态树能够让我们`最直接的方式`找到某个状态的片段，而且在之后的维护和调试过程中，也可以非常**方便的管理和维护**
 
@@ -292,9 +292,9 @@ addRootSum({state, commit, rootState}) {...}
 ### 八、优化Vuex-store的文件夹组织
 #### 8.1 对index.js抽离优化
 1. 先定义一个**state对象**保存Vuex的state数据
-2. 对`getters,mutations,actions`进行抽离，保存到**store对应名字的js文件**里
+2. 对`getters,mutations(mutations-type),actions`进行抽离，保存到**store对应名字的js文件**里
 3. 对`modules`抽离，在store里新建**modules文件夹**，里面新建**各种module的js**文件
-4. 在index.js里**导入**并**使用**
+4. 在各种js文件里**导出**，在index.js里**导入**并**使用**
 ```javaScript
 import getters from './getters'
 import mutations from './mutations'
