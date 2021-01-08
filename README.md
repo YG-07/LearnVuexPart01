@@ -289,3 +289,26 @@ const {name, age, address} = obj
 ```javaScript
 addRootSum({state, commit, rootState}) {...}
 ```
+### 八、优化Vuex-store的文件夹组织
+#### 8.1 对index.js抽离优化
+1. 先定义一个**state对象**保存Vuex的state数据
+2. 对`getters,mutations,actions`进行抽离，保存到**store对应名字的js文件**里
+3. 对`modules`抽离，在store里新建**modules文件夹**，里面新建**各种module的js**文件
+4. 在index.js里**导入**并**使用**
+```javaScript
+import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
+import moduleA from './modules/moduleA'
+```
+5. 最终store对象的效果
+```javaScript
+// const state = {...}  state数据
+const store = new Vuex.Store({
+  state, getters, mutations, actions,
+  modules: {
+    a: moduleA
+  }
+})
+export default store
+```
