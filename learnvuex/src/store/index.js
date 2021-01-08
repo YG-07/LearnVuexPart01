@@ -13,7 +13,12 @@ const store = new Vuex.Store({
       {id: 1003, name: 'Edu', score: 60},
       {id: 1004, name: 'Peter', score: 92},
       {id: 1005, name: 'Jim', score: 58},
-    ]
+    ],
+    info:{
+      name: 'Tom',
+      age: 22,
+      height: 1.75
+    }
   },
   mutations: {
     increment(state) {
@@ -31,6 +36,14 @@ const store = new Vuex.Store({
     //mutation的参数称为载荷(Payload)
     addStudent(state, student){
       state.students.push(student)
+    },
+    updateInfo(state) {
+      state.info.name = 'Peter'
+      // state.info['address'] = 'America'  //不是响应式
+      // 数组push、pop等等和Vue.set、Vue.delete方法是响应式
+      Vue.set(state.info, 'address', 'America')
+      // delete state.info.age  //不是响应式
+      Vue.delete(state.info, 'age')
     }
   },
   actions: {

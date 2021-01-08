@@ -50,10 +50,10 @@ bilibili URL：https://space.bilibili.com/36139192
 * 先在index.js里store对象的mutations属性里定义方法
 ```javaScript
 mutations: {
-    increment(state) {
-      state.counter++
-    }...
-  }
+  increment(state) {
+    state.counter++
+  }...
+}
 ```
 * 在再各个组件里定义点击事件方法
 ```HTML
@@ -127,8 +127,8 @@ incrementCount(state, count) {
 }
 
 addCount(count) {
-      this.$store.commit('incrementCount', count)
-    }
+  this.$store.commit('incrementCount', count)
+}
 ```
 2. **传递对象**
 ```javaScript
@@ -155,4 +155,16 @@ incrementCount(state, payload) {
   state.counter += payload.count
 }
 ```
-
+#### 5.4 Vuex的mutation的响应式原理
+* 直接对state初始化的数据修改是响应式的，添加state没有初始化的数据不是响应式的
+* 类比组件里的数组修改，使用Vue的方法对state的数据修改是响应式的
+```javaScript
+updateInfo(state) {
+  state.info.name = 'Peter'
+  // state.info['address'] = 'America'  //不是响应式
+  // 数组push、pop等等和Vue.set、Vue.delete方法是响应式
+  Vue.set(state.info, 'address', 'America')
+  // delete state.info.age  //不是响应式
+  Vue.delete(state.info, 'age')
+}
+```

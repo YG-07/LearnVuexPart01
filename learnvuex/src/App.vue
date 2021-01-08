@@ -39,6 +39,12 @@
       <h3>通过名字获取某个学生的信息</h3>
       <p>{{$store.getters.nametoStu('Tom')}}</p>
     </div>
+
+    <div>
+      <h2>Vuex的响应式原理</h2>
+      <p>{{$store.state.info}}</p>
+      <button @click="changeInfo">修改信息</button>
+    </div>
   </div>
 </template>
 
@@ -88,6 +94,9 @@ export default {
       console.log(aStu);
       this.$store.commit('addStudent', aStu)
     },
+    changeInfo() {
+      this.$store.commit('updateInfo')
+    }
   }
 }
 </script>
