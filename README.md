@@ -244,3 +244,48 @@ this.$store.dispatch('aUpdateInfo', '这是action的payload')
   .then(res => console.log('修改成功',res))
 })
 ```
+### 七、Vuex的modules模块
+#### 7.1 认识modules
+1. Vue使用单一状态树，那么也意味着很多状态都会交给Vuex来管理.
+2. 当应用变得非常复杂时，store对象就有可能变得相当腑肿
+3. 为了解决这个问题，Vuex允许我们将store分割成模块（Module），而每个模块拥有自己的state、mutations、actions、getters等
+#### 7.2 定义modules
+```javaScript
+const moduleA = {
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {}
+}
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA
+  }
+})
+```
+#### 7.3 使用modules时
+1. 使用modules里的state
+* 使用`{{$store.state.a.name}}`获取模块a里的数据  
+* 实际上，modules将a模块的state**作为对象**放到store对象的state里了
+2. 使用modules里的mutation、getters
+* 同样的操作，因为`模块里的mutation、getters名字和store的不能相同!`
+3. 使用modules里的getters，1、2个参数类似，还有3个参数的操作
+```javaScript
+addStr3(state, getters, rootState) {
+  return getters.addStr2 +rootState.counter
+}
+```
+4. 使用modules里的actions，同理，而且**context参数**多了些属性如:`.rootState`,`.rootGetters`
+* 如：ES6的对象语法,**对象的属性名必须一致，顺序随便**
+```javaScript
+const obj = {
+  name: 'abc',
+  age: 18,
+  address: 'China'
+}
+const {name, age, address} = obj
+```
+* modules里的actions的写法：参数除了是`context`，还能是一个`对象`,**按需传入context的属性**
+```javaScript
+addRootSum({state, commit, rootState}) {...}
+```

@@ -8,6 +8,36 @@ import {
 // 1.安装、创建、导出插件，类型路由
 Vue.use(Vuex)
 
+const moduleA = {
+  state: {
+    name: 'Timmy'
+  },
+  mutations: {
+    updateName(state, payload){
+      state.name = payload
+    }
+  },
+  getters: {
+    addStr(state) {
+      return state.name +'111'
+    },
+    addStr2(state, getters) {
+      return getters.addStr + '222'
+    },
+    addStr3(state, getters, rootState) {
+      return getters.addStr2 +rootState.counter
+    }
+  },
+  actions: {
+    aUpdateName(context) {
+      // context.rootState / .rootGetters
+      setTimeout(() => {
+        context.commit('updateName', 'Sam')
+      }, 1000)
+    }
+  }
+}
+
 const store = new Vuex.Store({
   state: {
     counter: 30,
@@ -22,6 +52,27 @@ const store = new Vuex.Store({
       name: 'Tom',
       age: 22,
       height: 1.75
+    }
+  },
+  getters: {
+    powerCounter(state) {
+      return state.counter * state.counter
+    },
+    passStudents(state){
+      //.filter()过滤器
+      return state.students.filter(s => s.score >=60)
+    },
+    // 添加getters参数
+    passStudentsLength(state, getters){
+      return getters.passStudents.length
+    },
+    nametoStu(state) {
+      // return function (name) {
+      //   return state.students.filter(s => s.name == name)
+      // }
+      return stuName => {
+        return state.students.filter(s => s.name == stuName)
+      } 
     }
   },
   mutations: {
@@ -71,29 +122,8 @@ const store = new Vuex.Store({
       })
     }
   },
-  getters: {
-    powerCounter(state) {
-      return state.counter * state.counter
-    },
-    passStudents(state){
-      //.filter()过滤器
-      return state.students.filter(s => s.score >=60)
-    },
-    // 添加getters参数
-    passStudentsLength(state, getters){
-      return getters.passStudents.length
-    },
-    nametoStu(state) {
-      // return function (name) {
-      //   return state.students.filter(s => s.name == name)
-      // }
-      return stuName => {
-        return state.students.filter(s => s.name == stuName)
-      } 
-    }
-  },
   modules: {
-
+    a: moduleA
   }
 
 })

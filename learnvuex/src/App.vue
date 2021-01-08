@@ -45,6 +45,15 @@
       <p>{{$store.state.info}}</p>
       <button @click="changeInfo">修改信息</button>
     </div>
+    <div>
+      <h2>Vuex的modules中的内容</h2>
+      <p>moduleA的nmae：{{$store.state.a.name}}</p>
+      <button @click="updateName">修改模块a的name</button>
+      <h3>{{$store.getters.addStr}}</h3>
+      <h3>{{$store.getters.addStr2}}</h3>
+      <h3>{{$store.getters.addStr3}}</h3>
+      <button @click="asyncUpName">异步修改模块a的name</button>
+    </div>
   </div>
 </template>
 
@@ -109,6 +118,12 @@ export default {
       // 2.方法二
       this.$store.dispatch('aUpdateInfo', '这是action的payload')
         .then(res => console.log('修改成功',res))
+    },
+    updateName() {
+      this.$store.commit('updateName', 'Jick')
+    },
+    asyncUpName() {
+      this.$store.dispatch('aUpdateName')
     }
   }
 }
