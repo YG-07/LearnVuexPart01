@@ -141,7 +141,7 @@ addStu(aStu) {
   this.$store.commit('addStudent', aStu)
 }
 ```
-#### 5.3 mutation的提交风格
+#### 5.3 mutation的提交风格 (137)
 Vue还提供了另外一种风格，它是一个包含type属性的对象  
 ```javaScript
 this.$store.commit({
@@ -157,7 +157,7 @@ incrementCount(state, payload) {
 ```
 #### 5.4 Vuex的mutation的响应式原理
 * 直接对state初始化的数据修改是响应式的，添加state没有初始化的数据不是响应式的
-* 类比组件里的数组修改，使用Vue的方法对state的数据修改是响应式的
+* 类比组件里的数组修改，使用Vue.set()的方法对state的数据修改是响应式的
 ```javaScript
 updateInfo(state) {
   state.info.name = 'Peter'
@@ -168,3 +168,36 @@ updateInfo(state) {
   Vue.delete(state.info, 'age')
 }
 ```
+#### 5.6 mutation的类型常量 (138)
+1. 使用mutation的问题：  
+* 在mutation中，我们定义了很多事件类型（也就是其中的方法名称）  
+* 当我们的项目增大时，Vuex管理的状态越来越多，需要更新状态的情况越来越多，那么意味着Mutation中的方法越来越多。
+* 方法过多，使用者需要花费大量的经历去记住这些方法，甚至是多个文件间来回切换。查看方法名称，甚至如果不是复制的时候，可能还会出现写错的情况。
+2. 解决方法
+* 在store里新建一个**mutations-types.js**文件用来`将mutation的方法名变成常量`
+* 1.在常量文件中export导出常量
+```javaScript
+export const INCREMENT = 'increment'
+export const DECREMENT = 'decrement'
+```
+* 2.在index.js和App组件里通过对象的方式导入`import {...}`
+```javaScript
+import {
+  INCREMENT,
+  DECREMENT
+} from './store/mutations-types'
+```
+* 3.然后分别使用常量
+```javaScript
+// mutations定义方法
+[INCREMENT](state) {
+  state.counter++
+}
+//App调用方法
+add() {
+  this.$store.commit(INCREMENT)
+}
+```
+3.mutation常量类型的作用
+* 这样在编程时，在mutation里定义了方法，不用每次都通过复制粘贴的方式调用
+* 将index.js和组件通过mutation的常量js连接起来，使双方在使用时，避免方法名的错误

@@ -50,6 +50,10 @@
 
 <script>
 import HelloVuex from './components/HelloVuex'
+import {
+  INCREMENT,
+  DECREMENT
+} from './store/mutations-types'
 
 export default {
   components: { HelloVuex },
@@ -73,10 +77,10 @@ export default {
   },
   methods: {
     add() {
-      this.$store.commit('increment')
+      this.$store.commit(INCREMENT)
     },
     sub() {
-      this.$store.commit('decrement')
+      this.$store.commit(DECREMENT)
     },
     addCount(count) {
       // this.$store.commit('incrementCount', count)
