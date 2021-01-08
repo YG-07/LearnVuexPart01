@@ -201,3 +201,46 @@ add() {
 3.mutation常量类型的作用
 * 这样在编程时，在mutation里定义了方法，不用每次都通过复制粘贴的方式调用
 * 将index.js和组件通过mutation的常量js连接起来，使双方在使用时，避免方法名的错误
+  
+### 六、Vuex的actions (139)
+#### 6.1 通过action处理异步操作
+* 需要异步修改state里的数据时，需要通过action的方法调用mutation的方法(**修改state数据必须经过mutation!**)
+#### 6.2 action异步操作案例
+需求：延迟1秒修改state里的info对象的name值,打印message，再回调打印成功信息  
+* 方法一
+1. actions里面定义方法，参数有`context`: 上下文,可选`payload`,延迟1秒`通过context调用mutation的commit方法`
+```javaScript
+aUpdateInfo(context, payload) {
+  setTimeout(() => {
+    context.commit('updateInfo')
+    console.log(payload.message);
+    payload.success()
+  }, 1000)
+}
+```
+2. App里面使用action操作,使用`dispatch方法`
+```javaScript
+changeInfo() {
+this.$store.dispatch('aUpdateInfo', {
+  message: '这是action的payload',
+  success: () => console.log('修改成功!')
+})
+}
+```
+* 方法二(优雅,Promise)
+1. actions里面定义方法，方法名、参数同上，但返回一个`Promise对象`
+```javaScript
+return new Promise((resolve, reject) => {
+  setTimeout(() => {
+    context.commit('updateInfo')
+    resolve('OK')
+  }, 1000)
+})
+```
+2. App里面使用action操，通过.then()或者.catch()回调返回的成功/失败的信息
+```javaScript
+changeInfo() {
+this.$store.dispatch('aUpdateInfo', '这是action的payload')
+  .then(res => console.log('修改成功',res))
+})
+```

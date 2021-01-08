@@ -99,7 +99,16 @@ export default {
       this.$store.commit('addStudent', aStu)
     },
     changeInfo() {
-      this.$store.commit('updateInfo')
+      // this.$store.commit('updateInfo')
+      // this.$store.dispatch('aUpdateInfo', '这是action的payload')
+      // 1.方法一
+      // this.$store.dispatch('aUpdateInfo', {
+      //   message: '这是action的payload',
+      //   success: () => console.log('修改成功!')
+      // })
+      // 2.方法二
+      this.$store.dispatch('aUpdateInfo', '这是action的payload')
+        .then(res => console.log('修改成功',res))
     }
   }
 }
